@@ -43,6 +43,17 @@ getSkipListLine (SkipListNodeConstructor value level next down)
   | next == Nil = [value]
   | otherwise = [value] ++ getSkipListLine next
 
+findNode element Nil = Nil
+findNode element (SkipListNodeConstructor value level next down)
+  | element == value = (SkipListNodeConstructor value level next down)
+  | (next == Nil || element >= (getValue next)) = findNode element next
+  | otherwise = findNode element down
+
+findElement element sl
+  | result == Nil = Nothing
+  | otherwise = Just (getValue result)
+  where result = findNode element sl
+
 -- instance Show SkipListNode where
 --  show Nil = "Nil"
 --  show (SkipListNodeConstructor value level next down) = show (printSkipList (SkipListNodeConstructor value level next down))
