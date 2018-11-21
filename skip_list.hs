@@ -1,3 +1,6 @@
+module MySkipList
+  where
+
 -- value level next down
 data SkipListNode = Nil | SkipListNodeConstructor Int Int SkipListNode SkipListNode
   deriving (Eq)
@@ -15,10 +18,18 @@ addElement element lv (SkipListNodeConstructor value level next down)
 addElementOnLv element lv Nil = Nil
 addElementOnLv element lv (SkipListNodeConstructor value level next down)
   | element < value = (SkipListNodeConstructor element lv current nextDown)
-  | (next == Nil || element <= (getValue next)) = (SkipListNodeConstructor value level (SkipListNodeConstructor element lv next (getNext nextDown)) nextDown)
-  | otherwise = addElementOnLv element lv next
+  | (next == Nil || element <= (getValue next)) = createNodeDownFirst value level nextDown (SkipListNodeConstructor element lv next (searchInLine element nextDown))
+--  | (next == Nil || element <= (getValue next)) = (SkipListNodeConstructor value level (SkipListNodeConstructor element lv next (getNext nextDown)) nextDown)
+  | otherwise =  (SkipListNodeConstructor value level (addElementOnLv element lv next) nextDown)
   where current = (SkipListNodeConstructor value level next down)
         nextDown = addElementOnLv element (lv-1) down
+
+createNodeDownFirst value level down next = (SkipListNodeConstructor value level next down)
+
+searchInLine element Nil = Nil
+searchInLine element (SkipListNodeConstructor value level next down)
+  | value == element = (SkipListNodeConstructor value level next down)
+  | otherwise = searchInLine element next
 
 createSkipList value 0 = SkipListNodeConstructor value 0 Nil Nil
 createSkipList value height = SkipListNodeConstructor value height Nil (createSkipList value (height -1))
