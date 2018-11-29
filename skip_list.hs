@@ -12,6 +12,7 @@ getNext (SkipListNodeConstructor value level next down) = next
 getNext Nil = Nil
 
 addElement element lv (SkipListNodeConstructor value level next down)
+  | (level > lv) && (next /= Nil) && (element > getValue next) = (SkipListNodeConstructor value level (addElement element lv next) (addElement element lv down))
   | level > lv = (SkipListNodeConstructor value level next (addElement element lv down))
   | otherwise = addElementOnLv element lv (SkipListNodeConstructor value level next down)
 
@@ -33,8 +34,6 @@ searchInLine element (SkipListNodeConstructor value level next down)
 createSkipList value 0 = SkipListNodeConstructor value 0 Nil Nil
 createSkipList value height = SkipListNodeConstructor value height Nil (createSkipList value (height -1))
 
-
-
 printSkipList (SkipListNodeConstructor value level next down)
   | down == Nil = [(getSkipListLine (SkipListNodeConstructor value level next down))]
   | otherwise = [(getSkipListLine (SkipListNodeConstructor value level next down))] ++ printSkipList down
@@ -46,7 +45,7 @@ getSkipListLine (SkipListNodeConstructor value level next down)
 findNode element Nil = Nil
 findNode element (SkipListNodeConstructor value level next down)
   | element == value = (SkipListNodeConstructor value level next down)
-  | (next == Nil || element >= (getValue next)) = findNode element next
+  | ((next /= Nil) && (element >= (getValue next))) = findNode element next
   | otherwise = findNode element down
 
 findElement element sl
