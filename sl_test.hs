@@ -44,4 +44,20 @@ insertTests = TestList [test1, test2, test3, test4, test5, test6, test7, test8, 
 findElementTests = TestList [test10, test11, test12, test13, test14, test15, test16]
 findNodeTests = TestList [test17, test18, test19, test20, test21, test22, test23]
 
+l1 = MySkipList.createMySkipList h5
+l2 = MySkipList.increaseHeight l1
+r1 = MySkipList.createMySkipList h2
+r2 = MySkipList.addHighElementSL 6 4 r1
+
+test24 = TestCase (assertEqual "Test show of MySkipList" ("MySLConstructor 2 (" ++ show_of_h5 ++ ")") (show l1))
+test25 = TestCase (assertEqual "Test get height l1" (2) (getHeight l1))
+test26 = TestCase (assertEqual "Test get head l1" (h5) (getHead l1))
+test27 = TestCase (assertEqual "Test of raw increaseHeight on l1" (3) (getHeight l2))
+test28 = TestCase (assertEqual "Test of raw increaseHeight on l1: head change" (SkipListNodeConstructor 1 3 Nil h5) (getHead l2))
+test29 = TestCase (assertEqual "Test addHighElementSL height change" (4) (getHeight r2))
+
+
+mSLTest = TestList [test24, test25, test26, test27, test28, test29]
+
+
 -- runTestTT tests
