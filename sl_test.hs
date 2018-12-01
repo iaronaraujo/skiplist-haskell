@@ -48,16 +48,24 @@ l1 = MySkipList.createMySkipList h5
 l2 = MySkipList.increaseHeight l1
 r1 = MySkipList.createMySkipList h2
 r2 = MySkipList.addHighElementSL 6 4 r1
+r3 = MySkipList.addElementToSkipList 1 3 r1
+r4 = MySkipList.addElementToSkipList 1 1 r1
+r5 = MySkipList.addElementToSkipList 1 6 r1
 
-test24 = TestCase (assertEqual "Test show of MySkipList" ("MySLConstructor 2 (" ++ show_of_h5 ++ ")") (show l1))
-test25 = TestCase (assertEqual "Test get height l1" (2) (getHeight l1))
-test26 = TestCase (assertEqual "Test get head l1" (h5) (getHead l1))
-test27 = TestCase (assertEqual "Test of raw increaseHeight on l1" (3) (getHeight l2))
-test28 = TestCase (assertEqual "Test of raw increaseHeight on l1: head change" (SkipListNodeConstructor 1 3 Nil h5) (getHead l2))
-test29 = TestCase (assertEqual "Test addHighElementSL height change" (4) (getHeight r2))
+test24_0 = TestCase (assertEqual "Test show of MySkipList" ("MySLConstructor 3 (" ++ show_of_h5 ++ ")") (show l1))
+test25_1 = TestCase (assertEqual "Test get height l1" (3) (getHeight l1))
+test26_2 = TestCase (assertEqual "Test get head l1" (h5) (getHead l1))
+test27_3 = TestCase (assertEqual "Test of raw increaseHeight on l1" (4) (getHeight l2))
+test28_4 = TestCase (assertEqual "Test of raw increaseHeight on l1: head change" (SkipListNodeConstructor 1 3 Nil h5) (getHead l2))
+test29_5 = TestCase (assertEqual "Test addHighElementSL height change" (4) (getHeight r2))
+test30_6 = TestCase (assertEqual "Test node change on addHighElementSL" [[3, 6], [3, 5, 6], [3, 5, 6], [3, 5, 6]] (printSkipList (getHead r2)))
+test31_7 = TestCase (assertEqual "Test head change on addElementToSkipList" [[1, 3, 5], [1, 3, 5], [1, 3, 5]] (printSkipList (getHead r3)))
+test32_8 = TestCase (assertEqual "Test head change on addElementToSkipList + new node's height change" [[1, 3, 5], [1, 3, 5], [1, 3, 5]] (printSkipList (getHead r4)))
+test33_9 = TestCase (assertEqual "Test head change on addElementToSkipList + new list's structure change" [[1], [1], [1], [1, 3, 5], [1, 3, 5], [1, 3, 5]] (printSkipList (getHead r5)))
+test34_10 = TestCase (assertEqual "Test new list's height change on addElementToSkipList" (6) (getHeight r5))
 
 
-mSLTest = TestList [test24, test25, test26, test27, test28, test29]
+mSLTest = TestList [test24_0, test25_1, test26_2, test27_3, test28_4, test29_5, test30_6, test31_7, test32_8, test33_9, test34_10]
 
 
 -- runTestTT tests

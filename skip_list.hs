@@ -19,7 +19,7 @@ addElement element lv (SkipListNodeConstructor value level next down)
 addElementOnLv element lv Nil = Nil
 addElementOnLv element lv (SkipListNodeConstructor value level next down)
   | element < value = (SkipListNodeConstructor element lv current nextDown)
-  | (next == Nil || element <= (getValue next)) = (SkipListNodeConstructor value level (SkipListNodeConstructor element lv next (searchInLine element nextDown)) nextDown)
+  | (next == Nil || element <= (getValue next)) = (SkipListNodeConstructor value level (SkipListNodeConstructor element lv next (searchInLine element nextDown)) nextDown) 
   | otherwise =  (SkipListNodeConstructor value level (addElementOnLv element lv next) nextDown)
   where current = (SkipListNodeConstructor value level next down)
         nextDown = addElementOnLv element (lv-1) down
@@ -52,28 +52,30 @@ findElement element sl
   | result == Nil = Nothing
   | otherwise = Just (getValue result)
   where result = findNode element sl
--- currentHeight head
+
+  
+-- currentListHeight head
 data MySkipList = MySLConstructor Int SkipListNode
   deriving (Eq, Show)
 
-createMySkipList (SkipListNodeConstructor value level next down) = MySLConstructor level (SkipListNodeConstructor value level next down)
+createMySkipList (SkipListNodeConstructor value level next down) = MySLConstructor (level+1) (SkipListNodeConstructor value level next down)
 
-increaseHeight (MySLConstructor currentHeight (SkipListNodeConstructor value level next down)) = (MySLConstructor (currentHeight+1) (SkipListNodeConstructor value (level+1) Nil current))
+increaseHeight (MySLConstructor currentListHeight (SkipListNodeConstructor value level next down)) = (MySLConstructor (currentListHeight+1) (SkipListNodeConstructor value (level+1) Nil current))
   where current = (SkipListNodeConstructor value level next down)
+  
+-- Treats the add of an element higher in height than Head.
+addHighElementSL element height (MySLConstructor currentListHeight head)
+  | (height > currentListHeight) && (element >= (getValue head)) = addHighElementSL element height (increaseHeight (MySLConstructor currentListHeight head))
+  | otherwise = MySLConstructor currentListHeight (addElement element (height-1) head)
 
---Treats the add of an element higher in height than Head.
-addHighElementSL element lv (MySLConstructor currentHeight head)
-  | lv > currentHeight = addHighElementSL element lv (increaseHeight (MySLConstructor currentHeight head))
-  | otherwise = MySLConstructor currentHeight (addElement element lv head)
+-- Treats the add of an element lower than the head but with lower height; current standard add.
+addElementToSkipList element height (MySLConstructor currentListHeight (SkipListNodeConstructor value level next down))
+  | (element < value) && (height < currentListHeight) = addHighElementSL element currentListHeight mySL
+  | otherwise = addHighElementSL element height mySL
+    where mySL = MySLConstructor currentListHeight (SkipListNodeConstructor value level next down)
 
---Treats the add of an element lower than the head but with lower height; current standard add.
-addElementToSkipList element lv (MySLConstructor currentHeight (SkipListNodeConstructor value level next down))
-  | (element < value) && (lv < currentHeight) = addHighElementSL element currentHeight mySL
-  | otherwise = addHighElementSL element lv mySL
-  where mySL = MySLConstructor currentHeight (SkipListNodeConstructor value level next down)
-
-getHeight (MySLConstructor currentHeight head) = currentHeight
-getHead (MySLConstructor currentHeight head) = head
+getHeight (MySLConstructor currentListHeight head) = currentListHeight
+getHead (MySLConstructor currentListHeight head) = head
 
 -- instance Show SkipListNode where
 --  show Nil = "Nil"
