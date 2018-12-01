@@ -21,7 +21,7 @@ test4 = TestCase (assertEqual "Addition on H3" [[1,3,5],[1,3,4,5],[1,3,4,5]] (My
 test5 = TestCase (assertEqual "Addition on H4" [[1,3,5],[1,2,3,4,5],[1,2,3,4,5]] (MySkipList.printSkipList h5))
 test6 = TestCase (assertEqual "Addition on H1" [[3],[3,4],[3,4]] (MySkipList.printSkipList a2))
 test7 = TestCase (assertEqual "Addition on A2" [[3,5],[3,4,5],[3,4,5]] (MySkipList.printSkipList a3))
-test8 = TestCase (assertEqual "Addition on H1 with height > maxheight" [[1,3],[1,3],[1,3]] (MySkipList.printSkipList b2))
+test8 = TestCase (assertEqual "Addition on H1 with height > maxheight" [[1],[1,3],[1,3],[1,3]] (MySkipList.printSkipList b2))
 test9 = TestCase (assertEqual "Test Show" show_of_h5 (show h5))
 
 test10 = TestCase (assertEqual "FindElement 0" (Nothing) (MySkipList.findElement 0 h5))
