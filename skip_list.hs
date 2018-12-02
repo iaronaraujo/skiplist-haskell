@@ -67,8 +67,10 @@ increaseHeight (MySLConstructor currentListHeight (SkipListNodeConstructor value
 -- Treats the add of an element higher in height than Head.
 addHighElementSL element height (MySLConstructor currentListHeight head)
   | (height > currentListHeight) && (element >= (getValue head)) = addHighElementSL element height (increaseHeight (MySLConstructor currentListHeight head))
-  | otherwise = MySLConstructor currentListHeight (addElement element (height-1) head)
-
+  | (height > currentListHeight) && (element < (getValue head)) = MySLConstructor height putElem
+  | otherwise = MySLConstructor currentListHeight putElem
+  where putElem = (addElement element (height-1) head)
+  
 -- Treats the add of an element lower than the head but with lower height; current standard add.
 addElementToSkipList element height (MySLConstructor currentListHeight (SkipListNodeConstructor value level next down))
   | (element < value) && (height < currentListHeight) = addHighElementSL element currentListHeight mySL
