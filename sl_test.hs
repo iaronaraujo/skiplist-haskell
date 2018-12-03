@@ -1,7 +1,7 @@
 import Test.HUnit
 import MySkipList
 
-h1 = MySkipList.createSkipList 3 2
+h1 = MySkipList.createSkipListNode 3 2
 h2 = MySkipList.addElement 5 2 h1
 h3 = MySkipList.addElement 4 1 h2
 h4 = MySkipList.addElement 1 2 h3
