@@ -64,8 +64,21 @@ test32_8 = TestCase (assertEqual "Test head change on addElementToSkipList + new
 test33_9 = TestCase (assertEqual "Test head change on addElementToSkipList + new list's structure change" [[1], [1], [1], [1, 3, 5], [1, 3, 5], [1, 3, 5]] (printSkipList (getHead r5)))
 test34_10 = TestCase (assertEqual "Test new list's height change on addElementToSkipList" (6) (getHeight r5))
 
+z1 = removeElement 1 h5
+z2 = removeElement 2 h5
+z3 = removeElement 3 h5
+z4 = removeElement 4 h5
+z5 = removeElement 5 h5
 
+test35 = TestCase (assertEqual "RemoveElement 1 h5" [[1,3,5],[1,2,3,4,5],[1,2,3,4,5]] (MySkipList.printSkipList z1))
+test36 = TestCase (assertEqual "RemoveElement 2 h5" [[1,3,5],[1,3,4,5],[1,3,4,5]] (MySkipList.printSkipList z2))
+test37 = TestCase (assertEqual "RemoveElement 3 h5" [[1,5],[1,2,4,5],[1,2,4,5]] (MySkipList.printSkipList z3))
+test38 = TestCase (assertEqual "RemoveElement 4 h5" [[1,3,5],[1,2,3,5],[1,2,3,5]] (MySkipList.printSkipList z4))
+test39 = TestCase (assertEqual "RemoveElement 5 h5" [[1,3],[1,2,3,4],[1,2,3,4]] (MySkipList.printSkipList z5))
+
+removeTests = TestList [test35, test36, test37, test38, test39]
 mSLTest = TestList [test24_0, test25_1, test26_2, test27_3, test28_4, test29_5, test30_6, test31_7, test32_8, test33_9, test34_10]
+allTests = TestList [test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12, test13, test14, test15, test16, test17, test18, test19, test20, test21, test22, test23, test24_0, test25_1, test26_2, test27_3, test28_4, test29_5, test30_6, test31_7, test32_8, test33_9, test34_10]
 
 
--- runTestTT tests
+-- runTestTT allTests

@@ -54,6 +54,24 @@ findElement element sl
   | otherwise = Just (getValue result)
   where result = findNode element sl
 
+removeElement element Nil = Nil
+removeElement element (SkipListNodeConstructor value level next down)
+  | ((next /= Nil) && (element == (getValue next))) = removeElement element slWithoutElement
+  | ((next /= Nil) && (element >= (getValue next))) = (SkipListNodeConstructor value level revNext revDown)
+  | otherwise = (SkipListNodeConstructor value level next revDown)
+  where slWithoutElement = (SkipListNodeConstructor value level (getNext next) down)
+        revDown = (removeElement element down)
+        revNext = (removeElement element next)
+
+removeElementFromSkipList element (MySLConstructor currentListHeight head) = (MySLConstructor currentListHeight (removeElement element head))
+-- removeElementFromSkipList element (MySLConstructor currentListHeight (SkipListNodeConstructor value level next down))
+--  | element == (getValue head) = (MySLConstructor currentListHeight (removeElement element (SkipListNodeConstructor value level next down)))
+--  | otherwise = (MySLConstructor currentListHeight (removeElement element (SkipListNodeConstructor value level next down)))
+
+getDirectNext (SkipListNodeConstructor value level next down)
+  | ((level == 0) && (next /= Nil)) = (getValue next)
+  | ((level == 0) && (next == Nil)) = 0
+  | otherwise = getDirectNext down
 
 -- currentListHeight head
 data MySkipList = MySLConstructor Int SkipListNode
@@ -70,7 +88,7 @@ addHighElementSL element height (MySLConstructor currentListHeight head)
   | (height > currentListHeight) && (element < (getValue head)) = MySLConstructor height putElem
   | otherwise = MySLConstructor currentListHeight putElem
   where putElem = (addElement element (height-1) head)
-  
+
 -- Treats the add of an element lower than the head but with lower height; current standard add.
 addElementToSkipList element height (MySLConstructor currentListHeight (SkipListNodeConstructor value level next down))
   | (element < value) && (height < currentListHeight) = addHighElementSL element currentListHeight mySL
