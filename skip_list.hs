@@ -43,6 +43,22 @@ getSkipListLine (SkipListNodeConstructor value level next down)
   | next == Nil = [value]
   | otherwise = [value] ++ getSkipListLine next
 
+printSkipListAsTuples (MySLConstructor currentListHeight head) = (printNodeAsTuple (head) (head))
+
+printNodeAsTuple (SkipListNodeConstructor value level next down) head
+  | nextLv0 == Nil = [(value, level)]
+  | otherwise = [(value, level)] ++ (printNodeAsTuple (findNode (getValue nextLv0) head) head)
+  where nextLv0 = getNextNode value (SkipListNodeConstructor value level next down)
+
+getNextNode value sl = getNext current_lv0
+  where current = (findNode value sl)
+        current_lv0 = getLowerLevel current
+
+getLowerLevel (SkipListNodeConstructor value level next down)
+  | level == 0 = (SkipListNodeConstructor value level next down)
+  | otherwise = getLowerLevel down
+
+
 findNode element Nil = Nil
 findNode element (SkipListNodeConstructor value level next down)
   | element == value = (SkipListNodeConstructor value level next down)

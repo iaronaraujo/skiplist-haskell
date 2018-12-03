@@ -80,9 +80,22 @@ test39 = TestCase (assertEqual "RemoveElement 5 h5" [[1,3],[1,2,3,4],[1,2,3,4]] 
 test40 = TestCase (assertEqual "RemoveElementFromSkipList 1 l1" [[2,3,5],[2,3,4,5],[2,3,4,5]] (printSkipList (getHead z6)))
 test41 = TestCase (assertEqual "RemoveElementFromSkipList 2 z6" [[3,5],[3,4,5],[3,4,5]] (printSkipList (getHead z7)))
 
+sl1 = MySkipList.createMySkipList h1
+sl2 = MySkipList.createMySkipList h2
+sl3 = MySkipList.createMySkipList h3
+sl4 = MySkipList.createMySkipList h4
+sl5 = MySkipList.createMySkipList h5
+
+test42 = TestCase (assertEqual "printSkipListAsTuples sl1" [(3,2)] (printSkipListAsTuples sl1))
+test43 = TestCase (assertEqual "printSkipListAsTuples sl2" [(3,2),(5,2)] (printSkipListAsTuples sl2))
+test44 = TestCase (assertEqual "printSkipListAsTuples sl3" [(3,2),(4,1),(5,2)] (printSkipListAsTuples sl3))
+test45 = TestCase (assertEqual "printSkipListAsTuples sl4" [(1,2),(3,2),(4,1),(5,2)] (printSkipListAsTuples sl4))
+test46 = TestCase (assertEqual "printSkipListAsTuples sl5" [(1,2),(2,1),(3,2),(4,1),(5,2)] (printSkipListAsTuples sl5))
+
 removeTests = TestList [test35, test36, test37, test38, test39, test40, test41]
 mSLTest = TestList [test24_0, test25_1, test26_2, test27_3, test28_4, test29_5, test30_6, test31_7, test32_8, test33_9, test34_10]
-allTests = TestList [test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12, test13, test14, test15, test16, test17, test18, test19, test20, test21, test22, test23, test24_0, test25_1, test26_2, test27_3, test28_4, test29_5, test30_6, test31_7, test32_8, test33_9, test34_10, test35, test36, test37, test38, test39, test40, test41]
+printSLtests = TestList [test42, test43, test44, test45, test46]
+allTests = TestList [test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12, test13, test14, test15, test16, test17, test18, test19, test20, test21, test22, test23, test24_0, test25_1, test26_2, test27_3, test28_4, test29_5, test30_6, test31_7, test32_8, test33_9, test34_10, test35, test36, test37, test38, test39, test40, test41, test42, test43, test44, test45, test46]
 
 
 -- runTestTT allTests
