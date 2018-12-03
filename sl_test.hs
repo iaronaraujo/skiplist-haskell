@@ -69,16 +69,20 @@ z2 = removeElement 2 h5
 z3 = removeElement 3 h5
 z4 = removeElement 4 h5
 z5 = removeElement 5 h5
+z6 = removeElementFromSkipList 1 l1
+z7 = removeElementFromSkipList 2 z6
 
 test35 = TestCase (assertEqual "RemoveElement 1 h5" [[1,3,5],[1,2,3,4,5],[1,2,3,4,5]] (MySkipList.printSkipList z1))
 test36 = TestCase (assertEqual "RemoveElement 2 h5" [[1,3,5],[1,3,4,5],[1,3,4,5]] (MySkipList.printSkipList z2))
 test37 = TestCase (assertEqual "RemoveElement 3 h5" [[1,5],[1,2,4,5],[1,2,4,5]] (MySkipList.printSkipList z3))
 test38 = TestCase (assertEqual "RemoveElement 4 h5" [[1,3,5],[1,2,3,5],[1,2,3,5]] (MySkipList.printSkipList z4))
 test39 = TestCase (assertEqual "RemoveElement 5 h5" [[1,3],[1,2,3,4],[1,2,3,4]] (MySkipList.printSkipList z5))
+test40 = TestCase (assertEqual "RemoveElementFromSkipList 1 l1" [[2,3,5],[2,3,4,5],[2,3,4,5]] (printSkipList (getHead z6)))
+test41 = TestCase (assertEqual "RemoveElementFromSkipList 2 z6" [[3,5],[3,4,5],[3,4,5]] (printSkipList (getHead z7)))
 
-removeTests = TestList [test35, test36, test37, test38, test39]
+removeTests = TestList [test35, test36, test37, test38, test39, test40, test41]
 mSLTest = TestList [test24_0, test25_1, test26_2, test27_3, test28_4, test29_5, test30_6, test31_7, test32_8, test33_9, test34_10]
-allTests = TestList [test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12, test13, test14, test15, test16, test17, test18, test19, test20, test21, test22, test23, test24_0, test25_1, test26_2, test27_3, test28_4, test29_5, test30_6, test31_7, test32_8, test33_9, test34_10]
+allTests = TestList [test1, test2, test3, test4, test5, test6, test7, test8, test9, test10, test11, test12, test13, test14, test15, test16, test17, test18, test19, test20, test21, test22, test23, test24_0, test25_1, test26_2, test27_3, test28_4, test29_5, test30_6, test31_7, test32_8, test33_9, test34_10, test35, test36, test37, test38, test39, test40, test41]
 
 
 -- runTestTT allTests

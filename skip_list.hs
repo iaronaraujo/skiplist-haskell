@@ -63,10 +63,15 @@ removeElement element (SkipListNodeConstructor value level next down)
         revDown = (removeElement element down)
         revNext = (removeElement element next)
 
-removeElementFromSkipList element (MySLConstructor currentListHeight head) = (MySLConstructor currentListHeight (removeElement element head))
--- removeElementFromSkipList element (MySLConstructor currentListHeight (SkipListNodeConstructor value level next down))
---  | element == (getValue head) = (MySLConstructor currentListHeight (removeElement element (SkipListNodeConstructor value level next down)))
---  | otherwise = (MySLConstructor currentListHeight (removeElement element (SkipListNodeConstructor value level next down)))
+-- removeElementFromSkipList element (MySLConstructor currentListHeight head) = (MySLConstructor currentListHeight (removeElement element head))
+removeElementFromSkipList element (MySLConstructor currentListHeight (SkipListNodeConstructor value level next down))
+  | element == (getValue head) = (MySLConstructor currentListHeight (removeHead (getDirectNext head) head))
+  | otherwise = (MySLConstructor currentListHeight (removeElement element head))
+  where head = (SkipListNodeConstructor value level next down)
+
+removeHead element (SkipListNodeConstructor value level next down)
+  | ((next /= Nil) && (element == (getValue next))) = next
+  | otherwise = (SkipListNodeConstructor element level next (removeHead element down))
 
 getDirectNext (SkipListNodeConstructor value level next down)
   | ((level == 0) && (next /= Nil)) = (getValue next)
